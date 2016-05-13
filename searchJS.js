@@ -46,8 +46,8 @@ function battleStart() {
   hpbar[0].style.display = hpbar[1].style.display = "block";
   hpbar[0].style.width = pkmn1["maxhp"]/4 + 50 + "px";
   hpbar[1].style.width = pkmn2["maxhp"]/4 + 50 + "px";
-  document.getElementById("atk1").style.display = "block";
-  document.getElementById("atk2").style.display = "block";
+  document.getElementById("moves1").style.display = "block";
+  document.getElementById("moves2").style.display = "block";
   document.getElementById("hp1").innerHTML = pkmn1["maxhp"] + "/" + pkmn1["maxhp"];
   document.getElementById("hp2").innerHTML = pkmn2["maxhp"] + "/" + pkmn2["maxhp"];
   pkmn1["hp"] = pkmn1["maxhp"];
