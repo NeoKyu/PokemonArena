@@ -1,0 +1,30 @@
+img {
+  display:inline-block;
+}
+
+table {
+  margin: auto;
+}
+
+td {
+  display: inline-block;
+  width: 200px;
+}
+
+.health {
+  min-width: 20px;
+  max-width: 300px;
+  display: none;
+}
+
+#atk1, #atk2 {
+  display: none;
+}
+
+#go {
+  margin: 10px;
+}
+
+#warning {
+  color: red;
+}
