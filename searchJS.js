@@ -102,7 +102,7 @@ function findSprite(user1, user2) {
   document.getElementById("pkmn2").src = "../sprites/default/" + user2 + ".png";
 }
 
-function damage(player) {
+function damage(player, move) {
   var hpbar;
   if(player == 1) {
     atk = pkmn2;
@@ -126,7 +126,8 @@ function damage(player) {
     for(var i = 0; i < buttons.length; i++)
       buttons[i].disabled = false;
   }
-    def["hp"] -= damageCalc(atk,def);
+
+    def["hp"] -= damageCalc(atk,def, move);
     var hpercent = 100*def["hp"]/def["maxhp"];
 
     if(hpercent > 0) {
@@ -154,11 +155,11 @@ function damage(player) {
       hpbar.className = "progress-bar progress-bar-success";
   }
 
-  function damageCalc(atk, def) {
+  function damageCalc(atk, def, move) {
     document.getElementById("warning").innerHTML = "";
     var message = "";
     dmg = ((2*atk["level"]+10)/250*(atk["atk"]/def["def"])*50 + 2);
-    if(atk["type"] == "Normal") {
+    if(atk["type"][0] == "Normal" || atk["type"][1] == "Normal") {
       dmg *= 1.5;
       message += "Same Type Attack Bonus!"
     }
