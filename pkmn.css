@@ -1,10 +1,6 @@
-img {
-  display:inline-block;
-}
+img {display:inline-block;}
 
-table {
-  margin: auto;
-}
+table {margin: auto;}
 
 td {
   display: inline-block;
@@ -17,9 +13,7 @@ td {
   color: #ffffff;
 }
 
-.btn:hover {
-  color: #ccc
-}
+.btn:hover {color: #ccc}
 
 .btn-bug {background-color: #A8B820;}
 .btn-dark {background-color: #705848;}
@@ -35,7 +29,7 @@ td {
 .btn-psychic {background-color: #F85888;}
 .btn-rock {background-color: #B8A038;}
 .btn-steel {background-color: #B8B8D0;}
-.btn-unknown {background-color: #68A090}
+.btn-unknown {background-color: #68A090;}
 
 .health {
   min-width: 20px;
@@ -43,13 +37,23 @@ td {
   display: none;
 }
 
-#go {
-  width: 75px;
+#arena{display:none;}
+
+#go {width: 75px;}
+
+#moves1, #moves2 {display: none;}
+
+#playagain {
+  display:none;
 }
 
-#moves1, #moves2 {
-  display: none;
+#playagain .btn {
+  display:inline-block;
 }
-#warning {
-  color: red;
+
+#pokeform td {
+  margin-bottom:2px
+  display: block;
 }
+
+#warning {color: red;padding-top:25px;padding-right:50px;}

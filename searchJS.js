@@ -1,16 +1,23 @@
 var pkmn1, pkmn2;
+var games_played = 0;
 
 function goSearch() {
   clearScreen();
-  var user1 = parseInt(document.getElementById("user1").value);
-  var user2 = parseInt(document.getElementById("user2").value);
+  var user1 = document.getElementById("user1").value;
+  var user2 = document.getElementById("user2").value;
 
-  if(user1 <= 0 || user1 > 721)
+  if(user1 == ""|| user2 == "") {
+    document.getElementById("warning").innerHTML = "empty input detected";
+  }
+
+  else if(user1 <= 0 || user1 > 721)
     document.getElementById("warning").innerHTML = "Pokemon #" + user1 + " does not exist.";
   else if(user2 <=0 || user2 > 721)
     document.getElementById("warning").innerHTML = "Pokemon #" + user2 + " does not exist.";
 
   else {
+    user1 = parseInt(user1);
+    user2 = parseInt(user2);
     var xhttp = new XMLHttpRequest();
     document.getElementById("warning").innerHTML = "";
     xhttp.onreadystatechange = function() {
@@ -34,26 +41,60 @@ function goSearch() {
   }
 }
 
+function checkEnter(e) {
+  if(e.keyCode == 13) {
+    goSearch();
+  }
+}
+
 function clearScreen() {
   document.getElementById("hp1").style.width = "100%";
   document.getElementById("hp2").style.width = "100%";
 }
 
 function battleStart() {
+  document.getElementById("arena").style.display = "table";
+  var hpbar = document.getElementsByClassName("health");
+  if(games_played < 1) {
+    hpbar[0].style.display = "block";
+    hpbar[1].style.display = "block";
+    document.getElementById("moves1").style.display = "block";
+    document.getElementById("moves2").style.display = "block";
+  }
+  else {
+      document.getElementById("hp1").className = "progress-bar progress-bar-success";
+      document.getElementById("hp2").className = "progress-bar progress-bar-success";
+      var buttons = document.getElementsByName("p2")
+      for(var i = 0; i < buttons.length; i++)
+        buttons[i].disabled = false;
+      buttons = document.getElementsByName("p1")
+      for(var i = 0; i < buttons.length; i++)
+        buttons[i].disabled = false;
+  }
+
+  if(pkmn1["spd"] > pkmn2["spd"]) {
+    var buttons = document.getElementsByName("p2");
+    for(var i = 0; i < buttons.length; i++)
+      buttons[i].disabled = true;
+    document.getElementById("warning").innerHTML = pkmn1["name"] + " is faster!"
+  }
+
+  else if(pkmn2["spd"] > pkmn1["spd"]) {
+    var buttons = document.getElementsByName("p1");
+    for(var i = 0; i < buttons.length; i++)
+      buttons[i].disabled = true;
+    document.getElementById("warning").innerHTML = pkmn2["name"] + " is faster!"
+  }
+
   document.getElementById("poketitle").innerHTML = pkmn1["name"] + " vs " + pkmn2["name"];
   document.getElementById("pokeform").style.display = "none";
-  var hpbar = document.getElementsByClassName("health");
-  hpbar[0].style.display = hpbar[1].style.display = "block";
   hpbar[0].style.width = pkmn1["maxhp"]/4 + 50 + "px";
   hpbar[1].style.width = pkmn2["maxhp"]/4 + 50 + "px";
-  document.getElementById("moves1").style.display = "block";
-  document.getElementById("moves2").style.display = "block";
   document.getElementById("hp1").innerHTML = pkmn1["maxhp"] + "/" + pkmn1["maxhp"];
   document.getElementById("hp2").innerHTML = pkmn2["maxhp"] + "/" + pkmn2["maxhp"];
   pkmn1["hp"] = pkmn1["maxhp"];
   pkmn2["hp"] = pkmn2["maxhp"];
-  document.getElementById("user1").value = "";
-  document.getElementById("user2").value = "";
+  games_played++;
 }
 
 function findSprite(user1, user2) {
@@ -67,15 +108,23 @@ function damage(player) {
     atk = pkmn2;
     def = pkmn1;
     hpbar = document.getElementById("hp1");
-    document.getElementById("atk2").disabled = true;
-    document.getElementById("atk1").disabled = false;
+    var buttons = document.getElementsByName("p2")
+    for(var i = 0; i < buttons.length; i++)
+      buttons[i].disabled = true;
+    buttons = document.getElementsByName("p1")
+    for(var i = 0; i < buttons.length; i++)
+      buttons[i].disabled = false;
   }
   else {
     atk = pkmn1;
     def = pkmn2;
     hpbar = document.getElementById("hp2");
-    document.getElementById("atk1").disabled = true;
-    document.getElementById("atk2").disabled = false;
+    var buttons = document.getElementsByName("p1")
+    for(var i = 0; i < buttons.length; i++)
+      buttons[i].disabled = true;
+    buttons = document.getElementsByName("p2")
+    for(var i = 0; i < buttons.length; i++)
+      buttons[i].disabled = false;
   }
     def["hp"] -= damageCalc(atk,def);
     var hpercent = 100*def["hp"]/def["maxhp"];
@@ -88,11 +137,13 @@ function damage(player) {
       hpbar.style.width = "0%";
       hpbar.innerHTML = 0 + "/" + def["maxhp"];
       document.getElementById("poketitle").innerHTML = atk["name"] + " wins!";
-      document.getElementById("playagain").innerHTML = "Play Again?";
-      document.getElementById("warning").innerHTML = "Only numbers from 1 to 721";
-      document.getElementById("atk1").style.display = "none";
-      document.getElementById("atk2").style.display = "none";
-      document.getElementById("pokeform").style.display = "block";
+      document.getElementById("playagain").style.display = "block";
+      var buttons = document.getElementsByName("p1");
+      for(var i = 0; i < buttons.length; i++)
+        buttons[i].disabled = true;
+      buttons = document.getElementsByName("p2");
+      for(var i = 0; i < buttons.length; i++)
+        buttons[i].disabled = true;
     }
 
     if(hpercent < 20)
@@ -104,22 +155,32 @@ function damage(player) {
   }
 
   function damageCalc(atk, def) {
+    document.getElementById("warning").innerHTML = "";
+    var message = "";
     dmg = ((2*atk["level"]+10)/250*(atk["atk"]/def["def"])*50 + 2);
-    if(atk["type"] == "Normal")
+    if(atk["type"] == "Normal") {
       dmg *= 1.5;
+      message += "Same Type Attack Bonus!"
+    }
     if(def["type"][0] == "Ghost" || def["type"][1] == "Ghost") {
       dmg = 0;
-      document.getElementById("warning").innerHTML = "Normal type moves do not afffect " + def["name"] + "...";
+      message += "<br />Normal type moves do not afffect " + def["name"] + "...";
     }
     else {
       if(def["type"][0] == "Rock" || def["type"][1] == "Rock") {
         dmg /= 2;
-        document.getElementById("warning").innerHTML = "Normal type moves aren't very effective against " + def["name"] + "...";
+        message += "<br />Normal type moves aren't very effective against Rock type Pokemons...";
       }
       if(def["type"][0] == "Steel" || def["type"][1] == "Steel") {
         dmg /= 2;
-        document.getElementById("warning").innerHTML = "Normal type moves aren't very effective against " + def["name"] + "...";
+        message += "<br />Normal type moves aren't very effective against Steel type Pokemons...";
       }
     }
+    if(Math.random() <= atk["spd"]/512) {
+      dmg *=1.5;
+      message += "<br /> Critical Hit!";
+      console.log("crit");
+    }
+    if(message != undefined) {document.getElementById("warning").innerHTML = message;}
     return dmg.toFixed(0);
   }

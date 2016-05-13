@@ -28,11 +28,11 @@
     $thispkmn["spatk"] = $stats[2]["base_stat"];
     $thispkmn["def"] = $stats[3]["base_stat"];
     $thispkmn["atk"] = $stats[4]["base_stat"];
-    $thispkmn["level"] = 100;
+    $thispkmn["level"] = 1;
     if($users[$i] == 292)
       $thispkmn["maxhp"] = 1;
     else
-    $thispkmn["maxhp"] =  ((2*$stats[5]["base_stat"]+ 100)*$thispkmn["level"] / 100) + 10;
+    $thispkmn["maxhp"] =  floor(((2*$stats[5]["base_stat"]+ 100)*$thispkmn["level"] / 100) + 10);
     $pkmn_arr[$i] = $thispkmn;
   }
 
