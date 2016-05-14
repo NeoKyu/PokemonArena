@@ -56,7 +56,7 @@
       $thispkmn["maxhp"] = 1;
 
     else
-    $thispkmn["maxhp"] =  floor(((2*$stats[5]["base_stat"]+ 100)*$thispkmn["level"] / 100) + 10);
+      $thispkmn["maxhp"] =  floor(((2*$stats[5]["base_stat"]+ 100)*$thispkmn["level"] / 100) + 10);
 
     $pkmn_arr[$i] = $thispkmn;
   }

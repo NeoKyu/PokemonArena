@@ -219,7 +219,17 @@ function damage(player, move) {
       message += "<br />is not very effective..."
     }
 
+    if(def["weak2"]["0.5x"].indexOf(move["type"]) != -1) {
+      dmg *= 0.5;
+      message += "<br />is not very effective..."
+    }
+
     if(def["weak"]["2x"].indexOf(move["type"]) != -1) {
+      dmg *= 2;
+      message += "<br />is super effective!"
+    }
+
+    if(def["weak2"]["2x"].indexOf(move["type"]) != -1) {
       dmg *= 2;
       message += "<br />is super effective!"
     }
