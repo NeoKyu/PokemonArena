@@ -1,26 +1,5 @@
-var pkmn1, pkmn2, poketypes;
+var pkmn1, pkmn2;
 var games_played = 0;
-
-//temp moves
-var move1  = {
-  name:"tackle",
-  type:"normal",
-  power:50,
-  accuracy:100,
-  damage_class:"physical"
-}
-
-var move2 = {
-  name:"shadowball",
-  type:"ghost",
-  power:80,
-  accuracy:100,
-  damage_class:"special"
-}
-
-var moves1 = [move1,move2];
-var moves2 = [move1,move2];
-var moveset = [moves1, moves2];
 
 function goSearch() {
   clearScreen();
@@ -43,19 +22,22 @@ function goSearch() {
     document.getElementById("warning").innerHTML = "";
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
+        document.getElementById("vs").innerHTML = " vs ";
         var pkmns = JSON.parse(xhttp.responseText);
         pkmn1 = pkmns[0];
         pkmn2 = pkmns[1];
-        poketypes = pkmns[2];
-        document.getElementById("name1").innerHTML = pkmn1["name"];
-        document.getElementById("name2").innerHTML = pkmn2["name"];
+        document.getElementById("name1").innerHTML = pkmn1["name"] + " (" + pkmn1["type"] + ")";
+        document.getElementById("name2").innerHTML = pkmn2["name"] + " (" + pkmn2["type"] + ")";
         battleStart();
       }
     };
 
     xhttp.open("GET", "searchPokedex.php?p=" + user1 + "&q=" + user2, true);
     xhttp.send();
+
+
     findSprite(user1, user2);
+
   }
 }
 
@@ -122,7 +104,7 @@ function findSprite(user1, user2) {
 
 function damage(player, move) {
   var hpbar;
-  if(player == 0) {
+  if(player == 1) {
     atk = pkmn2;
     def = pkmn1;
     hpbar = document.getElementById("hp1");
@@ -132,8 +114,6 @@ function damage(player, move) {
     buttons = document.getElementsByName("p1")
     for(var i = 0; i < buttons.length; i++)
       buttons[i].disabled = false;
-    moves = moveset[1];
-
   }
   else {
     atk = pkmn1;
@@ -145,10 +125,9 @@ function damage(player, move) {
     buttons = document.getElementsByName("p2")
     for(var i = 0; i < buttons.length; i++)
       buttons[i].disabled = false;
-    moves = moveset[0];
   }
 
-    def["hp"] -= damageCalc(atk,def, moves[move]);
+    def["hp"] -= damageCalc(atk,def, move);
     var hpercent = 100*def["hp"]/def["maxhp"];
 
     if(hpercent > 0) {
@@ -179,32 +158,30 @@ function damage(player, move) {
   function damageCalc(atk, def, move) {
     document.getElementById("warning").innerHTML = "";
     var message = "";
-
-    var dmg = 0;
-
-    if(move["damage_class"] == "physical")
-      dmg= ((2*atk["level"]+10)/250*(atk["atk"]/def["def"])*move["power"] + 2);
-
-    else if(move["damage_class"] == "special")
-      dmg = ((2*atk["level"]+10)/250*(atk["spatk"]/def["spdef"])*move["power"] + 2);
-
-    else
-      return 0;
-
-    if(atk["type"].indexOf(move["type"]) != -1) {
+    dmg = ((2*atk["level"]+10)/250*(atk["atk"]/def["def"])*50 + 2);
+    if(atk["type"][0] == "Normal" || atk["type"][1] == "Normal") {
       dmg *= 1.5;
       message += "Same Type Attack Bonus!"
     }
-
-    if(Math.random() <= atk["spd"]/512) {
-      dmg *= 1.5;
-
-      if(dmg != 0)
-        message += "<br /> Critical Hit!";
+    if(def["type"][0] == "Ghost" || def["type"][1] == "Ghost") {
+      dmg = 0;
+      message += "<br />Normal type moves do not afffect " + def["name"] + "...";
     }
-
-    if(message != undefined)
-      document.getElementById("warning").innerHTML = message;
-
+    else {
+      if(def["type"][0] == "Rock" || def["type"][1] == "Rock") {
+        dmg /= 2;
+        message += "<br />Normal type moves aren't very effective against Rock type Pokemons...";
+      }
+      if(def["type"][0] == "Steel" || def["type"][1] == "Steel") {
+        dmg /= 2;
+        message += "<br />Normal type moves aren't very effective against Steel type Pokemons...";
+      }
+    }
+    if(Math.random() <= atk["spd"]/512) {
+      dmg *=1.5;
+      message += "<br /> Critical Hit!";
+      console.log("crit");
+    }
+    if(message != undefined) {document.getElementById("warning").innerHTML = message;}
     return dmg.toFixed(0);
   }
