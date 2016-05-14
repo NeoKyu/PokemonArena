@@ -211,7 +211,7 @@ function damage(player, move) {
       return 0;
     }
 
-    if(Math.random() < move["accuracy"]/100) {
+    if(Math.random() > move["accuracy"]/100) {
       document.getElementById("warning").innerHTML = atk["name"] + " missed!";
       return 0;
     }
