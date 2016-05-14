@@ -8,7 +8,7 @@ var move1  = {
   power:50,
   accuracy:100,
   damage_class:"physical"
-}
+};
 
 var move2 = {
   name:"shadowball",
@@ -16,7 +16,7 @@ var move2 = {
   power:80,
   accuracy:100,
   damage_class:"special"
-}
+};
 
 var moves1 = [move1,move2];
 var moves2 = [move1,move2];
@@ -40,19 +40,18 @@ function goSearch() {
     user1 = parseInt(user1);
     user2 = parseInt(user2);
     var xhttp = new XMLHttpRequest();
-    document.getElementById("warning").innerHTML = "";
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
-        var pkmns = JSON.parse(xhttp.responseText);
-        pkmn1 = pkmns[0];
-        pkmn2 = pkmns[1];
-        poketypes = pkmns[2];
-        document.getElementById("name1").innerHTML = pkmn1["name"];
-        document.getElementById("name2").innerHTML = pkmn2["name"];
+        document.getElementById("warning").innerHTML = xhttp.responsetText;
+        // /var pkmns = JSON.parse(xhttp.responseText);
+        //pkmn1 = pkmns[0];
+        //pkmn2 = pkmns[1];
+        //poketypes = pkmns[2];
+        //document.getElementById("name1").innerHTML = pkmn1["name"];
+        //document.getElementById("name2").innerHTML = pkmn2["name"];
         battleStart();
       }
     };
-
     xhttp.open("GET", "searchPokedex.php?p=" + user1 + "&q=" + user2, true);
     xhttp.send();
     findSprite(user1, user2);
@@ -68,6 +67,7 @@ function checkEnter(e) {
 function clearScreen() {
   document.getElementById("hp1").style.width = "100%";
   document.getElementById("hp2").style.width = "100%";
+  document.getElementById("warning").innerHTML = "";
 }
 
 function battleStart() {
@@ -191,16 +191,30 @@ function damage(player, move) {
     else
       return 0;
 
+    if(def["weak"]["0x"].indexOf(move["type"]) != -1) {
+      document.getElementById("warning").innerHTML = move["name"]+" doesn't affect " + def["name"];
+    }
+
     if(atk["type"].indexOf(move["type"]) != -1) {
       dmg *= 1.5;
       message += "Same Type Attack Bonus!"
+    }
+
+    if(def["weak"]["0.5x"].indexOf(move["type"]) != -1) {
+      dmg *= 0.5;
+      message += move["type"] + "<br />is not very effective..."
+    }
+
+    if(def["weak"]["2x"].indexOf(move["type"]) != -1) {
+      dmg *= 2;
+      message += move["type"] + "<br />is super effective!"
     }
 
     if(Math.random() <= atk["spd"]/512) {
       dmg *= 1.5;
 
       if(dmg != 0)
-        message += "<br /> Critical Hit!";
+        message += "<br />Critical Hit!";
     }
 
     if(message != undefined)
