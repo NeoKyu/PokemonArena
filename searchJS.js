@@ -17,8 +17,24 @@ var move2 = {
   damage_class:"special"
 };
 
-var moves1 = [move1,move2];
-var moves2 = [move1,move2];
+var move3 = {
+  name:"Ember",
+  type:"fire",
+  power:40,
+  accuracy:100,
+  damage_class:"special"
+};
+
+var move4 = {
+  name:"Water Gun",
+  type:"water",
+  power:40,
+  accuracy:100,
+  damage_class:"special"
+};
+
+var moves1 = [move1,move2,move3,move4];
+var moves2 = [move1,move2,move3,move4];
 var moveset = [moves1, moves2];
 
 function goSearch() {
@@ -41,8 +57,6 @@ function goSearch() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
-        document.getElementById("warning").innerHTML = xhttp.responseText;
-        document.getElementById("vs").innerHTML = " vs ";
         var pkmns = JSON.parse(xhttp.responseText);
         pkmn1 = pkmns[0];
         pkmn2 = pkmns[1];
@@ -202,12 +216,12 @@ function damage(player, move) {
 
     if(def["weak"]["0.5x"].indexOf(move["type"]) != -1) {
       dmg *= 0.5;
-      message += move["type"] + "<br />is not very effective..."
+      message += "<br />is not very effective..."
     }
 
     if(def["weak"]["2x"].indexOf(move["type"]) != -1) {
       dmg *= 2;
-      message += move["type"] + "<br />is super effective!"
+      message += "<br />is super effective!"
     }
 
     if(Math.random() <= atk["spd"]/512) {
