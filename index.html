@@ -5,7 +5,7 @@
   <title>Pokemon Arena</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href = "pkmn.css" />
+  <link rel="stylesheet" type="text/css" href = "main.css" />
 </head>
 <body>
   <div class = "jumbotron">
@@ -42,16 +42,16 @@
       <tr>
         <td>
           <div id = "moves1" class = "center-block">
-            <input type = "button" class="btn btn-normal" name = "p1" value = "Tackle" onclick = "damage(2)" id = "atk1"/>
-            <input type = "button" class="btn btn-ghost" name = "p1" value = "Shadow Ball"/>
+            <input type = "button" class="btn btn-normal" name = "p1" value = "Tackle" onclick = "damage(0,0)"/>
+            <input type = "button" class="btn btn-ghost" name = "p1" value = "Shadow Ball"onclick = "damage(0,1)"/>
             <input type = "button" class="btn btn-warning" name = "p1" value = "Ember"/>
             <input type = "button" class="btn btn-primary" name = "p1" value = "Water Gun"/>
           </div>
         <td></td>
         <td>
           <div id = "moves2" class = "center-block">
-            <input type = "button" class="btn btn-normal" name = "p2" value = "Tackle" onclick = "damage(1)" id = "atk2"/>
-            <input type = "button" class="btn btn-ghost" name = "p2" value = "Shadow Ball"/>
+            <input type = "button" class="btn btn-normal" name = "p2" value = "Tackle" onclick = "damage(1,0)"/>
+            <input type = "button" class="btn btn-ghost" name = "p2" value = "Shadow Ball"onclick = "damage(1,1)"/>
             <input type = "button" class="btn btn-warning" name = "p2" value = "Ember"/>
             <input type = "button" class="btn btn-primary" name = "p2" value = "Water Gun"/>
           </div>

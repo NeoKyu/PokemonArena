@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
   $user1 = $_REQUEST["p"];
   $user2 = $_REQUEST["q"];
   $users = [$user1, $user2];
@@ -35,7 +34,7 @@
       $thispkmn["weak2"]["2x"] = $thistype2["double_damage_from"];
     }
     else {
-      $thispkmn["type"][0] = ucfirst($pokeconvert["types"][0]["type"]["name"]);
+      $thispkmn["type"][0] = $pokeconvert["types"][0]["type"]["name"];
 
       $thistype = $types[$thispkmn["type"][0]];
       $thispkmn["weak"]["0x"] = $thistype["no_damage_from"];
@@ -63,7 +62,7 @@
   }
 
   echo json_encode($pkmn_arr);
-=======
+
   // $user1 = $_REQUEST["p"];
   // $user2 = $_REQUEST["q"];
   // $users = [$user1, $user2];
@@ -129,6 +128,4 @@
   //   $output[$i] = $thispkmn;
   // }
   // echo json_encode($output);
-  echo "hi";
->>>>>>> refs/heads/types-support
   ?>

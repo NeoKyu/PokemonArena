@@ -1,9 +1,8 @@
 var pkmn1, pkmn2, poketypes;
 var games_played = 0;
-<<<<<<< HEAD
 
 var move1  = {
-  name:"tackle",
+  name:"Tackle",
   type:"normal",
   power:50,
   accuracy:100,
@@ -11,7 +10,7 @@ var move1  = {
 };
 
 var move2 = {
-  name:"shadowball",
+  name:"Shadow Ball",
   type:"ghost",
   power:80,
   accuracy:100,
@@ -21,29 +20,6 @@ var move2 = {
 var moves1 = [move1,move2];
 var moves2 = [move1,move2];
 var moveset = [moves1, moves2];
-=======
-//
-// temp moves
-// var move1  = {
-//   name:"tackle",
-//   type:"normal",
-//   power:50,
-//   accuracy:100,
-//   damage_class:"physical"
-// };
-//
-// var move2 = {
-//   name:"shadowball",
-//   type:"ghost",
-//   power:80,
-//   accuracy:100,
-//   damage_class:"special"
-// };
-//
-// var moves1 = [move1,move2];
-// var moves2 = [move1,move2];
-// var moveset = [moves1, moves2];
->>>>>>> refs/heads/types-support
 
 function goSearch() {
   clearScreen();
@@ -65,23 +41,13 @@ function goSearch() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
-<<<<<<< HEAD
-document.getElementById("warning").innerHTML = xhttp.responseText;
+        document.getElementById("warning").innerHTML = xhttp.responseText;
         document.getElementById("vs").innerHTML = " vs ";
         var pkmns = JSON.parse(xhttp.responseText);
         pkmn1 = pkmns[0];
         pkmn2 = pkmns[1];
         document.getElementById("name1").innerHTML = pkmn1["name"] + " (" + pkmn1["type"] + ")";
         document.getElementById("name2").innerHTML = pkmn2["name"] + " (" + pkmn2["type"] + ")";
-=======
-        document.getElementById("warning").innerHTML = xhttp.responsetText;
-        //var pkmns = JSON.parse(xhttp.responseText);
-        //pkmn1 = pkmns[0];
-        //pkmn2 = pkmns[1];
-        //poketypes = pkmns[2];
-        //document.getElementById("name1").innerHTML = pkmn1["name"];
-        //document.getElementById("name2").innerHTML = pkmn2["name"];
->>>>>>> refs/heads/types-support
         battleStart();
       }
     };
@@ -168,6 +134,7 @@ function damage(player, move) {
     buttons = document.getElementsByName("p1")
     for(var i = 0; i < buttons.length; i++)
       buttons[i].disabled = false;
+    moves = moveset[1];
   }
   else {
     atk = pkmn1;
@@ -179,9 +146,10 @@ function damage(player, move) {
     buttons = document.getElementsByName("p2")
     for(var i = 0; i < buttons.length; i++)
       buttons[i].disabled = false;
+    moves = moveset[0];
   }
 
-    def["hp"] -= damageCalc(atk,def, move);
+    def["hp"] -= damageCalc(atk,def, moves[move]);
     var hpercent = 100*def["hp"]/def["maxhp"];
 
     if(hpercent > 0) {
@@ -219,20 +187,18 @@ function damage(player, move) {
 
    else if(move["damage_class"] == "special")
      dmg = ((2*atk["level"]+10)/250*(atk["spatk"]/def["spdef"])*move["power"] + 2);
-
-<<<<<<< HEAD
    else
      return 0;
-=======
+
     if(def["weak"]["0x"].indexOf(move["type"]) != -1) {
       document.getElementById("warning").innerHTML = move["name"]+" doesn't affect " + def["name"];
+      return 0;
     }
 
     if(atk["type"].indexOf(move["type"]) != -1) {
       dmg *= 1.5;
       message += "Same Type Attack Bonus!"
     }
->>>>>>> refs/heads/types-support
 
     if(def["weak"]["0.5x"].indexOf(move["type"]) != -1) {
       dmg *= 0.5;
@@ -245,16 +211,9 @@ function damage(player, move) {
     }
 
     if(Math.random() <= atk["spd"]/512) {
-<<<<<<< HEAD
       dmg *=1.5;
-      message += "<br /> Critical Hit!";
-      console.log("crit");
-=======
-      dmg *= 1.5;
+      message += "<br />Critical Hit!";
 
-      if(dmg != 0)
-        message += "<br />Critical Hit!";
->>>>>>> refs/heads/types-support
     }
     if(message != undefined) {document.getElementById("warning").innerHTML = message;}
     return dmg.toFixed(0);
