@@ -196,16 +196,23 @@ function damage(player, move) {
     var message = "";
     var dmg = 0;
 
-   if(move["damage_class"] == "physical")
-     dmg= ((2*atk["level"]+10)/250*(atk["atk"]/def["def"])*move["power"] + 2);
+    if(move["damage_class"] == "physical")
+      dmg= ((2*atk["level"]+10)/250*(atk["atk"]/def["def"])*move["power"] + 2);
 
-   else if(move["damage_class"] == "special")
-     dmg = ((2*atk["level"]+10)/250*(atk["spatk"]/def["spdef"])*move["power"] + 2);
-   else
-     return 0;
+    else if(move["damage_class"] == "special")
+      dmg = ((2*atk["level"]+10)/250*(atk["spatk"]/def["spdef"])*move["power"] + 2);
 
+    else
+      return 0;
+
+    //check for immunity
     if(def["weak"]["0x"].indexOf(move["type"]) != -1 || def["weak2"]["0x"].indexOf(move["type"]) != -1) {
       document.getElementById("warning").innerHTML = move["name"]+" doesn't affect " + def["name"];
+      return 0;
+    }
+
+    if(Math.random() < move["accuracy"]/100) {
+      document.getElementById("warning").innerHTML = atk["name"] + " missed!";
       return 0;
     }
 
@@ -237,8 +244,8 @@ function damage(player, move) {
     if(Math.random() <= atk["spd"]/512) {
       dmg *=1.5;
       message += "<br />Critical Hit!";
-
     }
+
     if(message != undefined) {document.getElementById("warning").innerHTML = message;}
     return dmg.toFixed(0);
   }
