@@ -204,7 +204,7 @@ function damage(player, move) {
    else
      return 0;
 
-    if(def["weak"]["0x"].indexOf(move["type"]) != -1) {
+    if(def["weak"]["0x"].indexOf(move["type"]) != -1 || def["weak2"]["0x"].indexOf(move["type"]) != -1) {
       document.getElementById("warning").innerHTML = move["name"]+" doesn't affect " + def["name"];
       return 0;
     }
