@@ -1,5 +1,25 @@
-var pkmn1, pkmn2;
+var pkmn1, pkmn2, poketypes;
 var games_played = 0;
+
+var move1  = {
+  name:"tackle",
+  type:"normal",
+  power:50,
+  accuracy:100,
+  damage_class:"physical"
+};
+
+var move2 = {
+  name:"shadowball",
+  type:"ghost",
+  power:80,
+  accuracy:100,
+  damage_class:"special"
+};
+
+var moves1 = [move1,move2];
+var moves2 = [move1,move2];
+var moveset = [moves1, moves2];
 
 function goSearch() {
   clearScreen();
@@ -19,9 +39,9 @@ function goSearch() {
     user1 = parseInt(user1);
     user2 = parseInt(user2);
     var xhttp = new XMLHttpRequest();
-    document.getElementById("warning").innerHTML = "";
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
+document.getElementById("warning").innerHTML = xhttp.responseText;
         document.getElementById("vs").innerHTML = " vs ";
         var pkmns = JSON.parse(xhttp.responseText);
         pkmn1 = pkmns[0];
@@ -158,25 +178,17 @@ function damage(player, move) {
   function damageCalc(atk, def, move) {
     document.getElementById("warning").innerHTML = "";
     var message = "";
-    dmg = ((2*atk["level"]+10)/250*(atk["atk"]/def["def"])*50 + 2);
-    if(atk["type"][0] == "Normal" || atk["type"][1] == "Normal") {
-      dmg *= 1.5;
-      message += "Same Type Attack Bonus!"
-    }
-    if(def["type"][0] == "Ghost" || def["type"][1] == "Ghost") {
-      dmg = 0;
-      message += "<br />Normal type moves do not afffect " + def["name"] + "...";
-    }
-    else {
-      if(def["type"][0] == "Rock" || def["type"][1] == "Rock") {
-        dmg /= 2;
-        message += "<br />Normal type moves aren't very effective against Rock type Pokemons...";
-      }
-      if(def["type"][0] == "Steel" || def["type"][1] == "Steel") {
-        dmg /= 2;
-        message += "<br />Normal type moves aren't very effective against Steel type Pokemons...";
-      }
-    }
+    var dmg = 0;
+
+   if(move["damage_class"] == "physical")
+     dmg= ((2*atk["level"]+10)/250*(atk["atk"]/def["def"])*move["power"] + 2);
+
+   else if(move["damage_class"] == "special")
+     dmg = ((2*atk["level"]+10)/250*(atk["spatk"]/def["spdef"])*move["power"] + 2);
+
+   else
+     return 0;
+
     if(Math.random() <= atk["spd"]/512) {
       dmg *=1.5;
       message += "<br /> Critical Hit!";
