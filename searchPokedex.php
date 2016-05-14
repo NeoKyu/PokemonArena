@@ -3,7 +3,7 @@
   $user1 = $_REQUEST["p"];
   $user2 = $_REQUEST["q"];
   $users = [$user1, $user2];
-  $pkmn_arr = [];
+  $output = [];
 
   for($i = 0; $i < count($users); $i++) {
     $pokeget = "../pokedex/". $users[$i] .".json";
@@ -15,11 +15,15 @@
     $thispkmn["num"] = $users[$i];
 
     if($pokeconvert["types"][0]["slot"] == 2) {
-      $thispkmn["type"][0] = ucfirst($pokeconvert["types"][1]["type"]["name"]);
-      $thispkmn["type"][1] = ucfirst($pokeconvert["types"][0]["type"]["name"]);
+      $thispkmn["type"][0] = $pokeconvert["types"][1]["type"]["name"];
+      $thispkmn["type"][1] = $pokeconvert["types"][0]["type"]["name"];
+
+      #$output[2][$thispkmn["type"][0]] = json_decode(file_get_contents("../types/" . $thispkmn["type"][0] . ".json" ), True)[damage_relations];
+      #$output[2][$thispkmn["type"][1]] = json_decode(file_get_contents("../types/" . $thispkmn["type"][1] . ".json" ), True)[damage_relations];
     }
     else {
-      $thispkmn["type"][0] = ucfirst($pokeconvert["types"][0]["type"]["name"]);
+      $thispkmn["type"][0] = $pokeconvert["types"][0]["type"]["name"];
+      #$output[2][$thispkmn["type"][0]] = json_decode(file_get_contents("../types/" . $thispkmn["type"][0] . ".json" ), True)[damage_relations];
     }
 
     $stats = $pokeconvert["stats"];
@@ -32,9 +36,9 @@
     if($users[$i] == 292)
       $thispkmn["maxhp"] = 1;
     else
-    $thispkmn["maxhp"] =  floor(((2*$stats[5]["base_stat"]+ 100)*$thispkmn["level"] / 100) + 10);
-    $pkmn_arr[$i] = $thispkmn;
+      $thispkmn["maxhp"] =  floor(((2*$stats[5]["base_stat"]+ 100)*$thispkmn["level"] / 100) + 10);
+    $output[$i] = $thispkmn;
   }
 
-  echo json_encode($pkmn_arr);
+  echo json_encode($output);
   ?>

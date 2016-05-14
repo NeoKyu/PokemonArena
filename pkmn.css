@@ -13,6 +13,10 @@ td {
   color: #ffffff;
 }
 
+.btn:active {
+  color: #ffffff;
+}
+
 .btn:hover {color: #ccc}
 
 .btn-bug {background-color: #A8B820;}
