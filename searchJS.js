@@ -1,26 +1,26 @@
 var pkmn1, pkmn2, poketypes;
 var games_played = 0;
-
-//temp moves
-var move1  = {
-  name:"tackle",
-  type:"normal",
-  power:50,
-  accuracy:100,
-  damage_class:"physical"
-};
-
-var move2 = {
-  name:"shadowball",
-  type:"ghost",
-  power:80,
-  accuracy:100,
-  damage_class:"special"
-};
-
-var moves1 = [move1,move2];
-var moves2 = [move1,move2];
-var moveset = [moves1, moves2];
+//
+// temp moves
+// var move1  = {
+//   name:"tackle",
+//   type:"normal",
+//   power:50,
+//   accuracy:100,
+//   damage_class:"physical"
+// };
+//
+// var move2 = {
+//   name:"shadowball",
+//   type:"ghost",
+//   power:80,
+//   accuracy:100,
+//   damage_class:"special"
+// };
+//
+// var moves1 = [move1,move2];
+// var moves2 = [move1,move2];
+// var moveset = [moves1, moves2];
 
 function goSearch() {
   clearScreen();
@@ -43,7 +43,7 @@ function goSearch() {
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
         document.getElementById("warning").innerHTML = xhttp.responsetText;
-        // /var pkmns = JSON.parse(xhttp.responseText);
+        //var pkmns = JSON.parse(xhttp.responseText);
         //pkmn1 = pkmns[0];
         //pkmn2 = pkmns[1];
         //poketypes = pkmns[2];
