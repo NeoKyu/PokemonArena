@@ -37,11 +37,7 @@ td {
   display: none;
 }
 
-#arena{display:none;}
-
 #go {width: 75px;}
-
-#moves1, #moves2 {display: none;}
 
 #playagain {
   display:none;
