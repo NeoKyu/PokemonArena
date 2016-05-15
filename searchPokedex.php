@@ -25,21 +25,24 @@
       $thistype = $types[$thispkmn["type"][1]];
       $thistype2 = $types[$thispkmn["type"][0]];
 
-      $thispkmn["weak"]["0x"] = $thistype["no_damage_from"];
-      $thispkmn["weak"]["0.5x"] = $thistype["half_damage_from"];
-      $thispkmn["weak"]["2x"] = $thistype["double_damage_from"];
+      $thispkmn["weak"][0]["0x"] = $thistype["no_damage_from"];
+      $thispkmn["weak"][0]["0.5x"] = $thistype["half_damage_from"];
+      $thispkmn["weak"][0]["2x"] = $thistype["double_damage_from"];
 
-      $thispkmn["weak2"]["0x"] = $thistype2["no_damage_from"];
-      $thispkmn["weak2"]["0.5x"] = $thistype2["half_damage_from"];
-      $thispkmn["weak2"]["2x"] = $thistype2["double_damage_from"];
+      $thispkmn["weak"][1]["0x"] = $thistype2["no_damage_from"];
+      $thispkmn["weak"][1]["0.5x"] = $thistype2["half_damage_from"];
+      $thispkmn["weak"][1]["2x"] = $thistype2["double_damage_from"];
     }
     else {
       $thispkmn["type"][0] = $pokeconvert["types"][0]["type"]["name"];
 
       $thistype = $types[$thispkmn["type"][0]];
-      $thispkmn["weak"]["0x"] = $thistype["no_damage_from"];
-      $thispkmn["weak"]["0.5x"] = $thistype["half_damage_from"];
-      $thispkmn["weak"]["2x"] = $thistype["double_damage_from"];
+      $thispkmn["weak"][0]["0x"] = $thistype["no_damage_from"];
+      $thispkmn["weak"][0]["0.5x"] = $thistype["half_damage_from"];
+      $thispkmn["weak"][0]["2x"] = $thistype["double_damage_from"];
+      $thispkmn["weak"][1]["0x"] = [];
+      $thispkmn["weak"][1]["0.5x"] = [];
+      $thispkmn["weak"][1]["2x"] = [];
     }
 
     #stats
@@ -49,7 +52,7 @@
     $thispkmn["spatk"] = $stats[2]["base_stat"];
     $thispkmn["def"] = $stats[3]["base_stat"];
     $thispkmn["atk"] = $stats[4]["base_stat"];
-    $thispkmn["level"] = 1;
+    $thispkmn["level"] = 100;
 
     #shedinja has fixed 1hp
     if($users[$i] == 292)

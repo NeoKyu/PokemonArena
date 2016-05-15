@@ -206,7 +206,7 @@ function damage(player, move) {
       return 0;
 
     //check for immunity
-    if(def["weak"]["0x"].indexOf(move["type"]) != -1 || def["weak2"]["0x"].indexOf(move["type"]) != -1) {
+    if(def["weak"][0]["0x"].indexOf(move["type"]) != -1 || def["weak"][1]["0x"].indexOf(move["type"]) != -1) {
       document.getElementById("warning").innerHTML = move["name"]+" doesn't affect " + def["name"];
       return 0;
     }
@@ -221,28 +221,38 @@ function damage(player, move) {
       message += "Same Type Attack Bonus!"
     }
 
-    if(def["weak"]["0.5x"].indexOf(move["type"]) != -1) {
+    if(def["weak"][0]["0.5x"].indexOf(move["type"]) != -1) {
       dmg *= 0.5;
-      message += "<br />is not very effective..."
+      if(def["weak"][1]["0.5x"].indexOf(move["type"]) != -1) {
+        dmg *= 0.5;
+        message += "<br />is not very effective... (0.25x)";
+      }
+      else
+        message += "not very effective... (0.5x)"
     }
 
-    if(def["weak2"]["0.5x"].indexOf(move["type"]) != -1) {
+    else if(def["weak"][1]["0.5x"].indexOf(move["type"]) != -1) {
       dmg *= 0.5;
-      message += "<br />is not very effective..."
+      message += "<br />is not very effective... (0.5x)";
     }
 
-    if(def["weak"]["2x"].indexOf(move["type"]) != -1) {
+    if(def["weak"][0]["2x"].indexOf(move["type"]) != -1) {
       dmg *= 2;
-      message += "<br />is super effective!"
+      if(def["weak"][1]["2x"].indexOf(move["type"]) != -1) {
+        dmg *= 2;
+        message += "<br />is super effective! (4x)";
+      }
+      else
+        message += "<br />is super effective! (2x)";
     }
 
-    if(def["weak2"]["2x"].indexOf(move["type"]) != -1) {
+    else if(def["weak"][1]["2x"].indexOf(move["type"]) != -1) {
       dmg *= 2;
-      message += "<br />is super effective!"
+      message += "<br />is super effective! (2x)";
     }
 
     if(Math.random() <= atk["spd"]/512) {
-      dmg *=1.5;
+      dmg *= 1.5;
       message += "<br />Critical Hit!";
     }
 
