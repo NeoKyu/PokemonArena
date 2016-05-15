@@ -1,3 +1,6 @@
+body {
+  font-family:Montserrat;
+}
 img {display:inline-block;}
 
 table {margin: auto;}
@@ -8,7 +11,7 @@ td {
 }
 
 .btn {
-  width:100px;
+  width:150px;
   margin:2px;
   color: #ffffff;
 }
@@ -52,4 +55,8 @@ td {
   display: block;
 }
 
-#warning {color: red;padding-top:25px;padding-right:50px;}
+#warning {
+  color: red;
+  padding-top:25px;
+  padding-right:50px;
+}

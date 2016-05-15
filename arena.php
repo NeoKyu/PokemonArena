@@ -6,10 +6,11 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href = "main.css" />
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 </head>
 <body>
   <div class = "jumbotron">
-    <h1 class = "text-center" id = "poketitle"></h1>
+    <h1 class = "text-center" id = "poketitle">Fight!</h1>
   </div>
   <div class = "text-center block-center">
 

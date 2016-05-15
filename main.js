@@ -106,7 +106,6 @@ function battleStart() {
     document.getElementById("warning").innerHTML = pkmn2["name"] + " is faster!"
   }
 
-  document.getElementById("poketitle").innerHTML = pkmn1["name"] + " vs " + pkmn2["name"];
   hpbar[0].style.width = pkmn1["maxhp"]/4 + 50 + "px";
   hpbar[1].style.width = pkmn2["maxhp"]/4 + 50 + "px";
   document.getElementById("hp1").innerHTML = pkmn1["maxhp"] + "/" + pkmn1["maxhp"];
