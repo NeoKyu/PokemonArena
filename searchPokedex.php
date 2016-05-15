@@ -1,7 +1,7 @@
 <?php
 
-  $user1 = $_REQUEST["p"];
-  $user2 = $_REQUEST["q"];
+  $user1 = $_REQUEST["user1"];
+  $user2 = $_REQUEST["user2"];
   $users = [$user1, $user2];
   $pkmn_arr = [];
   $types = json_decode(file_get_contents("../types/types.json"), True);
@@ -63,6 +63,15 @@
 
     $pkmn_arr[$i] = $thispkmn;
   }
+
+   $move1 = $_REQUEST["move1"];
+   $move2 = $_REQUEST["move2"];
+
+  $pokeget = "../moves.json";
+  $content = file_get_contents($pokeget);
+  $json = json_decode($content, true);
+  $pkmn_arr[2] = $json[$move1];
+  $pkmn_arr[3] = $json[$move2];
 
   echo json_encode($pkmn_arr);
   ?>

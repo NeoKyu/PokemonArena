@@ -1,21 +1,7 @@
 var pkmn1, pkmn2, poketypes;
 var games_played = 0;
 
-var move1  = {
-  name:"Tackle",
-  type:"normal",
-  power:50,
-  accuracy:100,
-  damage_class:"physical"
-};
-
-var move2 = {
-  name:"Shadow Ball",
-  type:"ghost",
-  power:80,
-  accuracy:100,
-  damage_class:"special"
-};
+var m1, m2, move1, move2;
 
 var move3 = {
   name:"Ember",
@@ -33,27 +19,36 @@ var move4 = {
   damage_class:"special"
 };
 
-var moves1 = [move1,move2,move3,move4];
-var moves2 = [move1,move2,move3,move4];
-var moveset = [moves1, moves2];
+var moves1 = [];
+var moves2 = [];
 
-function goSearch(user1, user2) {
+var moveset = [];
+
+function goSearch(user1, user2, mov1, mov2) {
   clearScreen();
 
   user1 = parseInt(user1);
   user2 = parseInt(user2);
+  m1 = mov1 = mov1.toLowerCase();
+  m2 = mov2 = mov2.toLowerCase();
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       var pkmns = JSON.parse(xhttp.responseText);
       pkmn1 = pkmns[0];
       pkmn2 = pkmns[1];
+      move1 = pkmns[2];
+      move2 = pkmns[3];
+      moves1 = [move1,move2,move3,move4];
+      moves2 = [move1,move2,move3,move4];
+      moveset = [moves1, moves2];
+
       document.getElementById("name1").innerHTML = pkmn1["name"] + " (" + pkmn1["type"] + ")";
       document.getElementById("name2").innerHTML = pkmn2["name"] + " (" + pkmn2["type"] + ")";
       battleStart();
     }
   };
-  xhttp.open("GET", "searchPokedex.php?p=" + user1 + "&q=" + user2, true);
+  xhttp.open("GET", "searchPokedex.php?user1=" + user1 + "&user2=" + user2 + "&move1=" + mov1 + "&move2=" + mov2, true);
   xhttp.send();
 
 
@@ -75,13 +70,7 @@ function clearScreen() {
 function battleStart() {
   document.getElementById("arena").style.display = "table";
   var hpbar = document.getElementsByClassName("health");
-  if(games_played < 1) {
-    hpbar[0].style.display = "block";
-    hpbar[1].style.display = "block";
-    document.getElementById("moves1").style.display = "block";
-    document.getElementById("moves2").style.display = "block";
-  }
-  else {
+  if(games_played > 0) {
       document.getElementById("hp1").className = "progress-bar progress-bar-success";
       document.getElementById("hp2").className = "progress-bar progress-bar-success";
       var buttons = document.getElementsByName("p2")
@@ -112,6 +101,14 @@ function battleStart() {
   document.getElementById("hp2").innerHTML = pkmn2["maxhp"] + "/" + pkmn2["maxhp"];
   pkmn1["hp"] = pkmn1["maxhp"];
   pkmn2["hp"] = pkmn2["maxhp"];
+  var button1 = document.getElementsByName("p1")[0];
+  button1.value = m1;
+  var button2 = document.getElementsByName("p2")[0];
+  button2.value = m2;
+  console.log("btn-"+move1["type"]);
+  button1.className += " btn-" + move1["type"];
+  button2.className += " btn-" + move2["type"];
+  console.log(button1.className);
   games_played++;
 }
 
@@ -146,7 +143,6 @@ function damage(player, move) {
       buttons[i].disabled = false;
     moves = moveset[0];
   }
-
     def["hp"] -= damageCalc(atk,def, moves[move]);
     var hpercent = 100*def["hp"]/def["maxhp"];
 

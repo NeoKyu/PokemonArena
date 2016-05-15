@@ -45,7 +45,6 @@
         <tr>
           <td>
             <div id = "moves1" class = "center-block">
-              <input type = "button" class="btn btn-normal" name = "p1" value = "Tackle" onclick = "damage(0,0)"/>
               <input type = "button" class="btn btn-ghost" name = "p1" value = "Shadow Ball" onclick = "damage(0,1)"/>
               <input type = "button" class="btn btn-warning" name = "p1" value = "Ember" onclick = "damage(0,2)"/>
               <input type = "button" class="btn btn-primary" name = "p1" value = "Water Gun" onclick = "damage(0,3)"/>
@@ -53,7 +52,6 @@
           <td></td>
           <td>
             <div id = "moves2" class = "center-block">
-              <input type = "button" class="btn btn-normal" name = "p2" value = "Tackle" onclick = "damage(1,0)"/>
               <input type = "button" class="btn btn-ghost" name = "p2" value = "Shadow Ball" onclick = "damage(1,1)"/>
               <input type = "button" class="btn btn-warning" name = "p2" value = "Ember" onclick = "damage(1,2)"/>
               <input type = "button" class="btn btn-primary" name = "p2" value = "Water Gun" onclick = "damage(1,3)"/>
@@ -68,6 +66,6 @@
   <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src = "main.js"></script>
-  <script>goSearch(get("user1"), get("user2"));</script>
+  <script>goSearch(get("user1"), get("user2"), get("move1"), get("move2"));</script>
 </body>
 </html>

@@ -34,15 +34,16 @@ td {
 .btn-steel {background-color: #B8B8D0;}
 .btn-unknown {background-color: #68A090;}
 
+.form-control {margin:2px;}
 .health {
   min-width: 20px;
   max-width: 300px;
-  display: none;
 }
 
 #go {width: 75px;}
 
 #playagain {
+  margin-bottom:30px;
   display:none;
 }
 
