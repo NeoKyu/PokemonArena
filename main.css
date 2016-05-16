@@ -16,15 +16,18 @@ td {
   color: #ffffff;
 }
 
-.btn:hover {color: #ccc}
+.btn:hover {color: #000}
 
 .btn-bug {background-color: #A8B820;}
 .btn-dark {background-color: #705848;}
 .btn-dragon {background-color: #7038F8;}
-.btn-fairy {background-color: #EE99AC}
+.btn-electric {background-color: #F8D030;}
+.btn-fairy {background-color: #EE99AC;}
+.btn-fire {background-color:#F08030;}
 .btn-fighting {background-color:#C03028;}
 .btn-flying {background-color:#A890F0;}
 .btn-ghost {background-color: #735797;}
+.btn-grass {background-color:#78C850;}
 .btn-ground {background-color: #E0C068;}
 .btn-ice {background-color: #98D8D8;}
 .btn-normal {background-color: #A8A878;}
@@ -32,6 +35,7 @@ td {
 .btn-psychic {background-color: #F85888;}
 .btn-rock {background-color: #B8A038;}
 .btn-steel {background-color: #B8B8D0;}
+.btn-water {background-color:#6890F0;}
 .btn-unknown {background-color: #68A090;}
 
 .form-control {margin:2px;}

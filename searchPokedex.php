@@ -1,7 +1,7 @@
 <?php
 
   $user1 = $_REQUEST["user1"];
-  $user2 = $_REQUEST["user2"];
+  $user2 = rand(1,721);
   $users = [$user1, $user2];
   $pkmn_arr = [];
   $types = json_decode(file_get_contents("../types/types.json"), True);
@@ -64,14 +64,22 @@
     $pkmn_arr[$i] = $thispkmn;
   }
 
-   $move1 = $_REQUEST["move1"];
-   $move2 = $_REQUEST["move2"];
+  $move1 = $_REQUEST["move1"];
+  $move2 = $_REQUEST["move2"];
+  $move3 = $_REQUEST["move3"];
+  $move4 = $_REQUEST["move4"];
+  $moves = [$move1,$move2,$move3,$move4];
 
   $pokeget = "../moves.json";
   $content = file_get_contents($pokeget);
   $json = json_decode($content, true);
-  $pkmn_arr[2] = $json[$move1];
-  $pkmn_arr[3] = $json[$move2];
+
+  for($i=0;$i<4;$i++) {
+    $pkmn_arr[$i+2] = $json[$moves[$i]];
+    $movename = str_replace("-"," ",$moves[$i]);
+    $pkmn_arr[$i+2]["name"] = ucwords($movename);
+
+  }
 
   echo json_encode($pkmn_arr);
   ?>
