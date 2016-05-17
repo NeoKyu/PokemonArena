@@ -54,7 +54,6 @@ function goSearch(user1, mov1, mov2, mov3, mov4) {
       move4 = pkmns[5];
       moves1 = [move1,move2,move3,move4];
       moveset = [moves1, moves2];
-
       document.getElementById("name1").innerHTML = pkmn1["name"] + " (" + pkmn1["type"] + ")";
       document.getElementById("name2").innerHTML = pkmn2["name"] + " (" + pkmn2["type"] + ")";
       battleStart();
@@ -67,7 +66,7 @@ function goSearch(user1, mov1, mov2, mov3, mov4) {
 
 function get(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
-      return decodeURIComponent(name[1]).replace(" ", "-").toLowerCase();
+      return decodeURIComponent(name[1]).replace("+","-").toLowerCase();
 }
 
 function clearScreen() {

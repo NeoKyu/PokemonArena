@@ -3,7 +3,12 @@
   $user1 = $_REQUEST["user1"];
   if(!is_numeric($user1)) {
     $pokedex = json_decode(file_get_contents("../names.json"), True);
-    $user1 = $pokedex[$user1];
+    if(isset($pokedex[$user1])) {
+      $user1 = $pokedex[$user1];
+    }
+    else {
+      $user1 = 474;
+    }
   }
   $user2 = rand(1,721);
   $pkmn_arr = [];
@@ -15,8 +20,20 @@
     $pokeconvert = json_decode($pokeread, True);
     $thispkmn = array();
 
-    $thispkmn["name"] = ucfirst($pokeconvert["name"]);
-    $thispkmn["num"] = $users[$i];
+    #nidoran f
+    if($users[$i] == 29) {
+      $thispkmn["num"] = 29;
+      $thispkmn["name"] = "Nidoran &#9792";
+    }
+    #nidoran m
+    else if($users[$i] == 32) {
+      $thispkmn["num"] = 32;
+      $thispkmn["name"] = "Nidoran &#9794";
+    }
+    else {
+      $thispkmn["num"] = $users[$i];
+      $thispkmn["name"] = ucwords(str_replace("-"," ",$pokeconvert["name"]));
+    }
 
     if($pokeconvert["types"][0]["slot"] == 2) {
       $thispkmn["type"][0] = $pokeconvert["types"][1]["type"]["name"];
