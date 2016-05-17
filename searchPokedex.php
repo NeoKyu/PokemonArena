@@ -1,11 +1,14 @@
 <?php
 
   $user1 = $_REQUEST["user1"];
+  if(!is_numeric($user1)) {
+    $pokedex = json_decode(file_get_contents("../names.json"), True);
+    $user1 = $pokedex[$user1];
+  }
   $user2 = rand(1,721);
-  $users = [$user1, $user2];
   $pkmn_arr = [];
   $types = json_decode(file_get_contents("../types/types.json"), True);
-
+  $users = [$user1, $user2];
   for($i = 0; $i < count($users); $i++) {
     $pokeget = "../pokedex/". $users[$i] .".json";
     $pokeread = file_get_contents($pokeget);

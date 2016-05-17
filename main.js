@@ -37,8 +37,8 @@ var moveset = [];
 
 function goSearch(user1, mov1, mov2, mov3, mov4) {
   clearScreen();
-
-  user1 = parseInt(user1);
+  if(!isNaN(user1))
+    user1 = parseInt(user1);
   m1 = mov1;
   m2 = mov2;
   var xhttp = new XMLHttpRequest();
@@ -67,7 +67,7 @@ function goSearch(user1, mov1, mov2, mov3, mov4) {
 
 function get(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
-      return decodeURIComponent(name[1]).toLowerCase();
+      return decodeURIComponent(name[1]).replace(" ", "-").toLowerCase();
 }
 
 function clearScreen() {

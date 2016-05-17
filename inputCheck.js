@@ -15,7 +15,12 @@ function checkInput() {
     }
   if(user1 <= 0 || user1 > 721) {
     document.getElementById("warning").innerHTML = "Pokemon #" + user1 + " does not exist. ";
+    valid = false
+  }
+  else if(!user1.isNaN() && user.match(/\d/g)) {
+    document.getElementById("warning").innerHTML = "Pokemon #" + user1 + " does not exist. ";
     valid = false;
   }
+
   return valid;
 }
