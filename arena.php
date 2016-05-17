@@ -17,7 +17,7 @@
 
     <div id = "playagain" class = "center-block">
       <a href = "index.html"><input type="button" class = "btn btn-primary center-block" value = "New Game"/></a>
-      <input type="button" class = "btn btn-warning center-block" onclick="goSearch(get(\'user1\'), get('move1'), get('move2'), get('move3'), get('move4'));" value = "Play Again!"/>
+      <input type="button" class = "btn btn-warning center-block" onclick="goSearch(get('user'), get('move1'), get('move2'), get('move3'), get('move4'));" value = "Play Again!"/>
     </div>
 
     <div class = "container">
@@ -69,6 +69,6 @@
   <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src = "main.js"></script>
-  <script>goSearch(get("user1"), get("move1"), get("move2"), get("move3"), get("move4"));</script>
+  <script>goSearch(get("user"), get("move1"), get("move2"), get("move3"), get("move4"));</script>
 </body>
 </html>

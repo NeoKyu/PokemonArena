@@ -119,6 +119,10 @@ function battleStart() {
 }
 
 function findSprite(user1, user2) {
+  if(user1 == 678 && Math.random() >= 0.5)
+    user1 = "678f";
+  if(user2 == 678 && Math.random() >= 0.5)
+    user2 = "678f";
   document.getElementById("pkmn1").src = "../sprites/default/" + user1 + ".png";
   document.getElementById("pkmn2").src = "../sprites/default/" + user2 + ".png";
 }
