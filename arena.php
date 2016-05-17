@@ -6,6 +6,7 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href = "main.css" />
+  <link rel="stylesheet" type="text/css" href = "buttoncolours.css" />
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -16,7 +17,7 @@
 
     <div id = "playagain" class = "center-block">
       <a href = "index.html"><input type="button" class = "btn btn-primary center-block" value = "New Game"/></a>
-      <input type="button" class = "btn btn-warning center-block" onclick="goSearch(get('user1'), get('user2'));" value = "Play Again!"/>
+      <input type="button" class = "btn btn-warning center-block" onclick="goSearch(get(\'user1\'), get('move1'), get('move2'), get('move3'), get('move4'));" value = "Play Again!"/>
     </div>
 
     <div class = "container">
