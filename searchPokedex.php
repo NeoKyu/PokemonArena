@@ -95,10 +95,18 @@
   $json = json_decode($content, true);
 
   for($i=0;$i<4;$i++) {
-    $pkmn_arr[$i+2] = $json[$moves[$i]];
-    $movename = str_replace("-"," ",$moves[$i]);
-    $pkmn_arr[$i+2]["name"] = ucwords($movename);
 
+    #if the move doesn't exist, it is replaced by splash
+    if(isset($json[$moves[$i]])) {
+      $pkmn_arr[$i+2] = $json[$moves[$i]];
+      $movename = str_replace("-"," ",$moves[$i]);
+    }
+    else {
+      $pkmn_arr[$i+2] = $json["splash"];
+      $movename = "Splash";
+    }
+
+      $pkmn_arr[$i+2]["name"] = ucwords($movename);
   }
 
   echo json_encode($pkmn_arr);
