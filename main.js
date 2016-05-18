@@ -111,11 +111,18 @@ function battleStart() {
   pkmn1["hp"] = pkmn1["maxhp"];
   pkmn2["hp"] = pkmn2["maxhp"];
   var buttons1 = document.getElementsByName("p1");
-  for(var i = 0; i<buttons1.length;i++) {
+  var nbuttons1 = buttons1.length;
+  for(var i = 0; i<nbuttons1;i++) {
     buttons1[i].value = moves1[i]["name"];
     buttons1[i].className += " btn-" + moves1[i]["type"];
-}
+  }
+  var buttons2 = document.getElementsByName("p2");
+  var nbuttons2 = buttons2.length;
+  for(var i = 0; i<nbuttons2;i++) {
+    buttons2[i].value = moves2[i]["name"];
+    buttons2[i].className += " btn-" + moves2[i]["type"];
   games_played++;
+  }
 }
 
 function findSprite(user1, user2) {
@@ -241,6 +248,8 @@ function damage(player, move) {
       message += "<br />Same Type Attack Bonus!"
     }
 
-    if(message != undefined) {document.getElementById("warning").innerHTML = message;}
+    if(message != undefined) {
+      document.getElementById("warning").innerHTML = message;
+    }
     return (dmg*multiplier).toFixed(0);
   }
