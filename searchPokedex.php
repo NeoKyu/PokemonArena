@@ -14,7 +14,9 @@
   $pkmn_arr = [];
   $types = json_decode(file_get_contents("../types/types.json"), True);
   $users = [$user1, $user2];
-  for($i = 0; $i < count($users); $i++) {
+  $usercount = count($users);
+
+  for($i = 0; $i < $usercount; $i++) {
     $pokeget = "../pokedex/". $users[$i] .".json";
     $pokeread = file_get_contents($pokeget);
     $pokeconvert = json_decode($pokeread, True);

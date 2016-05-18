@@ -39,19 +39,36 @@ function searchMove(input) {
 }
 
 function searchPoke(user_input) {
-  if(user_input == "") {
-    document.getElementById("warning").innerHTML = "";
-  }
-  else {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (xhttp.readyState == 4 && xhttp.status == 200) {
-        if(xhttp.responseText != "") {
-          document.getElementById("warning").innerHTML = xhttp.responseText;
+  if(!user_input.match(/\d+/))
+    if(user_input == "") {
+      document.getElementById("warning").innerHTML = "";
+    }
+    else {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+          if(xhttp.responseText != "") {
+            document.getElementById("warning").innerHTML = xhttp.responseText;
+          }
         }
-      }
-    };
-    xhttp.open("GET", "pokecomplete.php?user=" + user_input.toLowerCase(), true);
-    xhttp.send();
+      };
+      xhttp.open("GET", "pokecomplete.php?user=" + user_input.toLowerCase(), true);
+      xhttp.send();
+    }
+  else {
+    if(user_input < 1 || user_input > 721)
+      document.getElementById("warning").innerHTML = "Pokemon not found.";
+    else {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+          if(xhttp.responseText != "") {
+            document.getElementById("warning").innerHTML = xhttp.responseText;
+          }
+        }
+      };
+      xhttp.open("GET", "pokenumsearch.php?user=" + user_input.toLowerCase(), true);
+      xhttp.send();
+    }
   }
 }
