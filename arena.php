@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class = "jumbotron">
-    <h1 class = "text-center" id = "poketitle">Fight!</h1>
+    <a href = "index.html"><h1 class = "text-center" id = "poketitle">Pokemon Arena</h1></a>
   </div>
   <div class = "text-center block-center">
 
