@@ -14,5 +14,5 @@
       }
     }
   }
-  echo $output;
+  echo $output . "";
  ?>

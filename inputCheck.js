@@ -25,6 +25,7 @@ function searchMove(input) {
     document.getElementById("warning").innerHTML = "";
   }
   else {
+    var user = document.getElementById("user").value;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -33,7 +34,7 @@ function searchMove(input) {
         }
       }
     };
-    xhttp.open("GET", "movecomplete.php?user=" + input.toLowerCase(), true);
+    xhttp.open("GET", "movecomplete.php?input=" + input.toLowerCase() + "&user=" + user.toLowerCase(), true);
     xhttp.send();
   }
 }
