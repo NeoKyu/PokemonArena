@@ -86,29 +86,36 @@
     $pkmn_arr[$i] = $thispkmn;
   }
 
+  $moveget = "../moves.json";
+  $content = file_get_contents($moveget);
+  $movedex = json_decode($content, true);
+
   $move1 = $_REQUEST["move1"];
   $move2 = $_REQUEST["move2"];
   $move3 = $_REQUEST["move3"];
   $move4 = $_REQUEST["move4"];
   $moves = [$move1,$move2,$move3,$move4];
 
-  $pokeget = "../moves.json";
-  $content = file_get_contents($pokeget);
-  $json = json_decode($content, true);
-
   for($i=0;$i<4;$i++) {
-
-    #if the move doesn't exist, it is replaced by splash
-    if(isset($json[$moves[$i]])) {
-      $pkmn_arr[$i+2] = $json[$moves[$i]];
+    $pokemoves = json_decode(file_get_contents("../pokedex/" . $pkmn_arr[0]["num"] . ".json"), True)["moves"];
+    if(isset($movedex[$moves[$i]]) && in_array(str_replace(" ", "-", $moves[$i]), $pokemoves)) {
+      $pkmn_arr[2][$i] = $movedex[$moves[$i]];
       $movename = str_replace("-"," ",$moves[$i]);
-    }
-    else {
-      $pkmn_arr[$i+2] = $json["splash"];
-      $movename = "Splash";
+      $pkmn_arr[2][$i]["name"] = ucwords($movename);
     }
 
-      $pkmn_arr[$i+2]["name"] = ucwords($movename);
+    #if the move doesn't exist, it is replaced by splash (move that doesn't do anything)
+    else {
+      $pkmn_arr[2][$i] = $movedex["splash"];
+      $pkmn_arr[2][$i]["name"] = "Splash";
+    }
+  }
+
+  $moveset2 = $pokeconvert["moves"];
+  shuffle($moveset2);
+  for($i = 0; $i < 4; $i++) {
+    $pkmn_arr[3][$i] = $movedex[$moveset2[$i]];
+    $pkmn_arr[3][$i]["name"] = ucwords(str_replace("-", " ", $moveset2[$i]));
   }
 
   echo json_encode($pkmn_arr);
