@@ -12,7 +12,7 @@
   }
   $user2 = rand(1,721);
   $pkmn_arr = [];
-  $types = json_decode(file_get_contents("../types/types.json"), True);
+  $types = json_decode(file_get_contents("../types.json"), True);
   $users = [$user1, $user2];
   $usercount = count($users);
 
