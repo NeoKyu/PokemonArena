@@ -17,16 +17,16 @@
 
       <form id = "pokeform" class = "form-inline" action="arena.php" method="get" onsubmit="return checkInput()">
 
-        <input type="text" class = "form-control" id="user" name = "user" autocomplete="off" placeholder = "Pokemon 1" onkeyup="searchPoke(this.value)" />
+        <input type="text" class = "form-control" id="user" name = "user" autocomplete="off" placeholder = "Pokemon 1" onkeyup="searchPoke(this.value)" onblur="pokeComplete(this.value)"/>
         <br />
         <p></p>
-        <input type="text" class = "form-control" id="move1" name = "move1" autocomplete="off" placeholder = "Move 1" onkeyup="searchMove(this.value)" />
+        <input type="text" class = "form-control" id="move1" name = "move1" autocomplete="off" placeholder = "Move 1" onkeyup="searchMove(this.value)" onblur="moveComplete(this.value, 1)"/>
         <br />
-        <input type="text" class = "form-control" id="move2" name = "move2" autocomplete="off" placeholder = "Move 2" onkeyup="searchMove(this.value)" />
+        <input type="text" class = "form-control" id="move2" name = "move2" autocomplete="off" placeholder = "Move 2" onkeyup="searchMove(this.value)" onblur="moveComplete(this.value, 2)"/>
         <br />
-        <input type="text" class = "form-control" id="move3" name = "move3" autocomplete="off" placeholder = "Move 3" onkeyup="searchMove(this.value)" />
+        <input type="text" class = "form-control" id="move3" name = "move3" autocomplete="off" placeholder = "Move 3" onkeyup="searchMove(this.value)" onblur="moveComplete(this.value, 3)"/>
         <br />
-        <input type="text" class = "form-control" id="move4" name = "move4" autocomplete="off" placeholder = "Move 4" onkeyup="searchMove(this.value)" />
+        <input type="text" class = "form-control" id="move4" name = "move4" autocomplete="off" placeholder = "Move 4" onkeyup="searchMove(this.value)" onblur="moveComplete(this.value, 4)"/>
         <br />
         <p></p>
         <input type = "submit" class = "btn btn-danger" />
