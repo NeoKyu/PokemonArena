@@ -15,13 +15,14 @@
   $types = json_decode(file_get_contents("../types.json"), True);
   $users = [$user1, $user2];
   $usercount = count($users);
+  $moveset = array();
 
   for($i = 0; $i < $usercount; $i++) {
     $pokeget = "../pokedex/". $users[$i] .".json";
     $pokeread = file_get_contents($pokeget);
     $pokeconvert = json_decode($pokeread, True);
     $thispkmn = array();
-
+    $moveset[$i] = $pokeconvert["moves"];
     #nidoran f
     if($users[$i] == 29) {
       $thispkmn["num"] = 29;
@@ -74,7 +75,7 @@
     $thispkmn["spatk"] = $stats[2]["base_stat"];
     $thispkmn["def"] = $stats[3]["base_stat"];
     $thispkmn["atk"] = $stats[4]["base_stat"];
-    $thispkmn["level"] = 100;
+    $thispkmn["level"] = 1;
 
     #shedinja has fixed 1hp
     if($users[$i] == 292)
@@ -83,7 +84,7 @@
     else
       $thispkmn["maxhp"] =  floor(((2*$stats[5]["base_stat"]+ 100)*$thispkmn["level"] / 100) + 10);
 
-    $pkmn_arr[$i] = $thispkmn;
+    $pkmn_arr[0][$i] = $thispkmn;
   }
 
   $moveget = "../moves.json";
@@ -96,26 +97,27 @@
   $move4 = $_REQUEST["move4"];
   $moves = [$move1,$move2,$move3,$move4];
 
+  shuffle($moveset[0]);
+
   for($i=0;$i<4;$i++) {
-    $pokemoves = json_decode(file_get_contents("../pokedex/" . $pkmn_arr[0]["num"] . ".json"), True)["moves"];
-    if(isset($movedex[$moves[$i]]) && in_array(str_replace(" ", "-", $moves[$i]), $pokemoves)) {
-      $pkmn_arr[2][$i] = $movedex[$moves[$i]];
+    if(isset($movedex[$moves[$i]]) && in_array(str_replace(" ", "-", $moves[$i]), $moveset[0])) {
+      $pkmn_arr[1][$i] = $movedex[$moves[$i]];
       $movename = str_replace("-"," ",$moves[$i]);
-      $pkmn_arr[2][$i]["name"] = ucwords($movename);
+      $pkmn_arr[1][$i]["name"] = ucwords($movename);
     }
 
     #if the move doesn't exist, it is replaced by splash (move that doesn't do anything)
     else {
-      $pkmn_arr[2][$i] = $movedex["splash"];
-      $pkmn_arr[2][$i]["name"] = "Splash";
+      $pkmn_arr[1][$i] = $movedex[$moveset[0][$i]];
+      $pkmn_arr[1][$i]["name"] = ucwords(str_replace("-", " ", $moveset[0][$i]));
     }
   }
 
-  $moveset2 = $pokeconvert["moves"];
-  shuffle($moveset2);
+
+  shuffle($moveset[1]);
   for($i = 0; $i < 4; $i++) {
-    $pkmn_arr[3][$i] = $movedex[$moveset2[$i]];
-    $pkmn_arr[3][$i]["name"] = ucwords(str_replace("-", " ", $moveset2[$i]));
+    $pkmn_arr[2][$i] = $movedex[$moveset[1][$i]];
+    $pkmn_arr[2][$i]["name"] = ucwords(str_replace("-", " ", $moveset[1][$i]));
   }
 
   echo json_encode($pkmn_arr);

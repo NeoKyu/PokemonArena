@@ -54,14 +54,15 @@
           <td></td>
           <td>
             <div id = "moves2" class = "center-block">
-              <input type = "button" class="btn" name = "p2" onclick = "damage(1,0)"/>
-              <input type = "button" class="btn" name = "p2" onclick = "damage(1,1)"/>
-              <input type = "button" class="btn" name = "p2" onclick = "damage(1,2)"/>
-              <input type = "button" class="btn" name = "p2" onclick = "damage(1,3)"/>
+              <input type = "button" class="btn" name = "p2" />
+              <input type = "button" class="btn" name = "p2" />
+              <input type = "button" class="btn" name = "p2" />
+              <input type = "button" class="btn" name = "p2" />
             </div>
         </tr>
       </table>
 
+      <p id = "narration"></p>
       <p id = "warning"></p>
 
     </div>

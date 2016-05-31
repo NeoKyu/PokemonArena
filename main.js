@@ -19,10 +19,10 @@ function goSearch(user1, mov1, mov2, mov3, mov4) {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       console.log(xhttp.responseText);
       var pkmns = JSON.parse(xhttp.responseText);
-      pkmn1 = pkmns[0];
-      pkmn2 = pkmns[1];
-      moves1 = pkmns[2];
-      moves2 = pkmns[3];
+      pkmn1 = pkmns[0][0];
+      pkmn2 = pkmns[0][1];
+      moves1 = pkmns[1];
+      moves2 = pkmns[2];
       moveset = [moves1, moves2];
       document.getElementById("name1").innerHTML = pkmn1["name"] + " (" + pkmn1["type"] + ")";
       document.getElementById("name2").innerHTML = pkmn2["name"] + " (" + pkmn2["type"] + ")";
@@ -61,20 +61,6 @@ function battleStart() {
         buttons[i].disabled = false;
   }
 
-  if(pkmn1["spd"] > pkmn2["spd"]) {
-    var buttons = document.getElementsByName("p2");
-    for(var i = 0; i < buttons.length; i++)
-      buttons[i].disabled = true;
-    document.getElementById("warning").innerHTML = pkmn1["name"] + " is faster!"
-  }
-
-  else if(pkmn2["spd"] > pkmn1["spd"]) {
-    var buttons = document.getElementsByName("p1");
-    for(var i = 0; i < buttons.length; i++)
-      buttons[i].disabled = true;
-    document.getElementById("warning").innerHTML = pkmn2["name"] + " is faster!"
-  }
-
   hpbar[0].style.width = pkmn1["maxhp"]/4 + 50 + "px";
   hpbar[1].style.width = pkmn2["maxhp"]/4 + 50 + "px";
   document.getElementById("hp1").innerHTML = pkmn1["maxhp"] + "/" + pkmn1["maxhp"];
@@ -92,8 +78,20 @@ function battleStart() {
   for(var i = 0; i<nbuttons2;i++) {
     buttons2[i].value = moves2[i]["name"];
     buttons2[i].className = "btn btn-" + moves2[i]["type"];
-  games_played++;
   }
+
+  if(pkmn1["spd"] > pkmn2["spd"]) {
+    var buttons = document.getElementsByName("p2");
+    for(var i = 0; i < buttons.length; i++)
+      buttons[i].disabled = true;
+    document.getElementById("warning").innerHTML = pkmn1["name"] + " is faster!";
+  }
+
+  else if(pkmn2["spd"] > pkmn1["spd"]) {
+    document.getElementById("warning").innerHTML = pkmn2["name"] + " is faster!";
+    damage(1);
+  }
+  games_played++;
 }
 
 function findSprite(user1, user2) {
@@ -113,42 +111,56 @@ function findSprite(user1, user2) {
 }
 
 function damage(player, move) {
-  var hpbar;
+  var hpbar, dmg;
   if(player == 1) {
     atk = pkmn2;
     def = pkmn1;
     hpbar = document.getElementById("hp1");
-    var buttons = document.getElementsByName("p2")
+    var buttons = document.getElementsByName("p2");
     for(var i = 0; i < buttons.length; i++)
       buttons[i].disabled = true;
-    buttons = document.getElementsByName("p1")
+    buttons = document.getElementsByName("p1");
     for(var i = 0; i < buttons.length; i++)
       buttons[i].disabled = false;
     moves = moveset[1];
+    move = bestDamage(moves);
+    dmg = damageCalc(atk, def, moves[move]);
   }
+
   else {
     atk = pkmn1;
     def = pkmn2;
     hpbar = document.getElementById("hp2");
-    var buttons = document.getElementsByName("p1")
+    var buttons = document.getElementsByName("p1");
     for(var i = 0; i < buttons.length; i++)
       buttons[i].disabled = true;
-    buttons = document.getElementsByName("p2")
+    buttons = document.getElementsByName("p2");
     for(var i = 0; i < buttons.length; i++)
       buttons[i].disabled = false;
     moves = moveset[0];
+    dmg = damageCalc(atk,def, moves[move]);
   }
-    console.log(moves[move]["name"]);
-    def["hp"] -= damageCalc(atk,def, moves[move]);
+    document.getElementById("narration").innerHTML = atk["name"] + " inflicted " + dmg + " damage using " + moves[move]["name"] + "!";
+    def["hp"] -= dmg;
     var hpercent = 100*def["hp"]/def["maxhp"];
-
     if(hpercent > 0) {
       hpbar.style.width = hpercent + "%";
       hpbar.innerHTML = def["hp"] + "/" + def["maxhp"];
+
+      if(hpercent < 20)
+        hpbar.className = "progress-bar progress-bar-danger";
+      else if(hpercent < 50)
+        hpbar.className = "progress-bar progress-bar-warning";
+      else
+        hpbar.className = "progress-bar progress-bar-success";
+
+      if(player != 1) {
+        setTimeout(function(){damage(1);}, 2000)
+      }
     }
     else {
       hpbar.style.width = "0%";
-      hpbar.innerHTML = 0 + "/" + def["maxhp"];
+      hpbar.innerHTML = "0/" + def["maxhp"];
       document.getElementById("poketitle").innerHTML = atk["name"] + " wins!";
       document.getElementById("playagain").style.display = "block";
       var buttons = document.getElementsByName("p1");
@@ -158,13 +170,6 @@ function damage(player, move) {
       for(var i = 0; i < buttons.length; i++)
         buttons[i].disabled = true;
     }
-
-    if(hpercent < 20)
-      hpbar.className = "progress-bar progress-bar-danger";
-    else if(hpercent < 50)
-      hpbar.className = "progress-bar progress-bar-warning";
-    else
-      hpbar.className = "progress-bar progress-bar-success";
   }
 
   function damageCalc(atk, def, move) {
@@ -230,6 +235,16 @@ function damage(player, move) {
       document.getElementById("warning").innerHTML = message;
     }
     return (dmg*multiplier).toFixed(0);
+  }
+
+  function bestDamage(moves) {
+    var best = 0;
+    for(var i = 1; i < moveset.length; i++) {
+      if(damageCalc(pkmn2, pkmn1, moves[i]) > damageCalc(pkmn2, pkmn1, moves[best])) {
+        best = i;
+      }
+    }
+    return best;
   }
 
 function ImageExist(url) {
