@@ -101,8 +101,15 @@ function findSprite(user1, user2) {
     user1 = "678f";
   if(user2 == 678 && Math.random() >= 0.5)
     user2 = "678f";
-  document.getElementById("pkmn1").src = "../sprites/default/" + user1 + ".png";
-  document.getElementById("pkmn2").src = "../sprites/default/" + user2 + ".png";
+
+  if(Math.random() >= 0.98 && ImageExist("../sprites/shiny/" + user1 + ".png")) {
+    document.getElementById("pkmn1").src = "../sprites/shiny/" + user1 + ".png";
+    console.log("You got a shiny Pokemon!");
+  }
+  else {
+    document.getElementById("pkmn1").src = "../sprites/default/" + user1 + ".png";
+  }
+    document.getElementById("pkmn2").src = "../sprites/default/" + user2 + ".png";
 }
 
 function damage(player, move) {
@@ -224,3 +231,9 @@ function damage(player, move) {
     }
     return (dmg*multiplier).toFixed(0);
   }
+
+function ImageExist(url) {
+   var img = new Image();
+   img.src = url;
+   return img.height == 0;
+}
